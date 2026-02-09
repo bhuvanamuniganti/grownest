@@ -5,25 +5,31 @@ require("dotenv").config();
 
 const speakingRoutes = require("./routes/speakingRoutes");
 const learningRoutes = require("./routes/learningRoutes");
-
+const practiceImageRoutes = require("./routes/practiceImage");
 
 const app = express();
-const FRONTEND_URL = process.env.FRONTEND_URL;
 
-app.use(cors());
-
-
+/* ---------- MIDDLEWARE ---------- */
+app.use(cors({
+  origin: "http://localhost:3000",
+  credentials: true
+}));
 
 app.use(express.json());
 
-app.use(fileUpload({
-  useTempFiles: true,
-  tempFileDir: "/tmp/"
-}));
+app.use(
+  fileUpload({
+    useTempFiles: true,
+    tempFileDir: "/tmp/",
+  })
+);
 
+/* ---------- ROUTES (ISOLATED) ---------- */
 app.use("/api/speaking", speakingRoutes);
-app.use("/api/learning", learningRoutes)
+app.use("/api/learning", learningRoutes);
+app.use("/api/practice-image", practiceImageRoutes);
 
+/* ---------- START SERVER ---------- */
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Backend running on port ${PORT}`);

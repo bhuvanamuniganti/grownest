@@ -443,7 +443,7 @@ const [lang, setLang] = useState(
       >
         ← Back
       </button>
-      <h2 className="translator-title">🌍 AI Translator</h2>
+      <h2 className="translator-title">Audio Books</h2>
 
       <div style={{ position: "relative" }}>
         <textarea

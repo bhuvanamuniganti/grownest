@@ -71,7 +71,7 @@ function Practice() {
 
         <div
           className="practice-card"
-          onClick={() => openSection("oral-written")}
+          onClick={() => openSection("image")}
         >
           <h3>✍ Oral & Written Practice</h3>
           <p>
@@ -82,7 +82,7 @@ function Practice() {
 
         <div
           className="practice-card"
-          onClick={() => openSection("homework-helper")}
+          onClick={() => openSection("")}
         >
           <h3>📘 Homework Helper</h3>
           <p>
@@ -99,39 +99,6 @@ function Practice() {
           <p>
             Understand the “why” behind concepts with simple explanations.
             Helps build strong foundations across subjects.
-          </p>
-        </div>
-
-        <div
-          className="practice-card"
-          onClick={() => openSection("focus-practice")}
-        >
-          <h3>🎯 Focus Practice</h3>
-          <p>
-            Activities designed to improve attention and thinking skills.
-            Supports better learning and problem-solving.
-          </p>
-        </div>
-
-        <div
-          className="practice-card highlight-card"
-          onClick={() => openSection("daily-practice")}
-        >
-          <h3>📅 Daily Practice</h3>
-          <p>
-            Short, focused activities designed for daily learning.
-            Builds strong habits with just a few minutes of practice.
-          </p>
-        </div>
-
-        <div
-          className="practice-card"
-          onClick={() => openSection("progress")}
-        >
-          <h3>🌱 Learning Progress</h3>
-          <p>
-            Track learning activity and improvement over time.
-            Encourages progress without pressure.
           </p>
         </div>
       </div>

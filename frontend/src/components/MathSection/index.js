@@ -1,6 +1,7 @@
 // src/sections/MathTutorSection.jsx
 import { API_BASE } from "../../api";
 import { useState, useEffect, useRef } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import jsPDF from "jspdf";
 
 export default function MathTutorSection() {
@@ -37,6 +38,9 @@ export default function MathTutorSection() {
   const fileInputRef = useRef(null);
   const patternFileRef = useRef(null);
   const mountedRef = useRef(true);
+
+  const location = useLocation();
+    const navigate = useNavigate();
 
   useEffect(() => {
     mountedRef.current = true;
@@ -456,6 +460,16 @@ export default function MathTutorSection() {
         .camera-stage video { width:100%; height:100%; object-fit:cover; }
         .camera-controls { display:flex; gap:8px; justify-content:center; }
       `}</style>
+
+            <button
+        className="back-btn"  style={{
+    marginBottom: "12px",
+    alignSelf: "flex-start"
+  }}
+        onClick={() => navigate("/practice", { state: location.state })}
+      >
+        ← Back
+      </button>
 
       <h2 className="translator-title" style={{ marginBottom: 12 }}>📐 Math Tutor</h2>
 

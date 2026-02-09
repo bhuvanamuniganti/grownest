@@ -142,8 +142,7 @@ router.post("/highlight", async (req, res) => {
   }
 });
 
-// === Analyze Uploaded Image (fixed with Base64) ===
-// === Analyze Uploaded Image (clean text output) ===
+// === Analyze Uploaded Image===
 router.post("/analyze",  async (req, res) => {
   try {
     const fs = require("fs");
