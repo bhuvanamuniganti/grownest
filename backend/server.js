@@ -6,13 +6,14 @@ require("dotenv").config();
 const speakingRoutes = require("./routes/speakingRoutes");
 
 const app = express();
+const FRONTEND_URL = process.env.FRONTEND_URL;
 
 app.use(cors({
-  origin: [
-    "http://localhost:3000",
-    "https://YOUR_NETLIFY_SITE.netlify.app"
-  ]
+  origin: FRONTEND_URL,
+  methods: ["GET", "POST"],
+  credentials: true
 }));
+
 
 app.use(express.json());
 
