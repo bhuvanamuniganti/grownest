@@ -3,6 +3,7 @@ import Home from "./Home";
 import Practice from "./Practice";
 import ConfidentSpeaker from "./components/ConfidentSpeaker";
 import TranslatorSection from "./components/TranslatorSection/index.js";
+import MathSection from "./components/MathSection/index.js"
 
 import "./App.css";
 
@@ -18,7 +19,7 @@ function App() {
         />
 
         <Route path="/practice/translator" element={<TranslatorSection />} />
-
+        <Route path = "/practice/math" element = {<MathSection/>}/>
       </Routes>
     </BrowserRouter>
   );

@@ -60,7 +60,7 @@ function Practice() {
 
         <div
           className="practice-card"
-          onClick={() => openSection("maths")}
+          onClick={() => openSection("math")}
         >
           <h3>➕ Maths Practice</h3>
           <p>

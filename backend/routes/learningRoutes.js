@@ -433,9 +433,11 @@ Rules:
 // === Math section OCR analyze (separate route to avoid touching other sections) ===
 router.post("/analyze-math", async (req, res) => {
   try {
-    if (!req.file) return res.status(400).json({ error: "No file uploaded." });
-
-    const filePath = path.resolve(req.file.path);
+    if (!req.files || !req.files.file) {
+      return res.status(400).json({ error: "No file uploaded." });
+    }
+const uploadedFile = req.files.file;
+    const filePath = uploadedFile.tempFilePath;
     const imageBase64 = fs.readFileSync(filePath, { encoding: "base64" });
 
     // Use the same model call you already use for OCR
@@ -475,7 +477,7 @@ router.post("/analyze-math", async (req, res) => {
 router.post("/math-tutor",async (req, res) => {
   try {
     const text = (req.body && req.body.text) ? req.body.text : "";
-    const mode = (req.body && req.body.mode) ? req.body.mode : "alternative"; // "teacher" or "alternative"
+    const modeNormalized = (req.body && req.body.mode) ? req.body.mode : "alternative"; // "teacher" or "alternative"
     let teacherPattern = (req.body && req.body.teacherPattern) ? req.body.teacherPattern : "";
 
     if (!text || !text.trim()) {
@@ -483,43 +485,41 @@ router.post("/math-tutor",async (req, res) => {
     }
 
     // If teacher pattern image was uploaded in this request, OCR it and append
-    if (req.file) {
-      const filePath = path.resolve(req.file.path);
-      let imageBase64 = "";
-      try {
-        imageBase64 = fs.readFileSync(filePath, { encoding: "base64" });
-      } catch (e) {
-        try { fs.unlinkSync(filePath); } catch (e2) {}
-        return res.status(500).json({ error: "Failed to read uploaded file." });
-      }
+   // REPLACE THIS BLOCK COMPLETELY
+if (req.files && req.files.file) {
+  const uploadedFile = req.files.file;
+  const filePath = uploadedFile.tempFilePath;
 
-      try {
-        const analyzeResp = await client.chat.completions.create({
-          model: "gpt-4o-mini",
-          messages: [
-            { role: "system", content: "You are an OCR assistant. Extract only the plain text (teacher pattern) from the image." },
-            {
-              role: "user",
-              content: [
-                { type: "text", text: "Extract the text content from this image (teacher pattern):" },
-                { type: "image_url", image_url: { url: `data:image/png;base64,${imageBase64}` } }
-              ]
-            }
-          ],
-          temperature: 0,
-          max_tokens: 1200,
-        });
-        const extracted = analyzeResp.choices?.[0]?.message?.content?.trim() || "";
-        if (extracted) teacherPattern = `${teacherPattern}\n${extracted}`.trim();
-      } catch (e) {
-        console.warn("OCR of teacher pattern image failed:", e.message);
-      } finally {
-        try { fs.unlinkSync(filePath); } catch (e) {}
+  const imageBase64 = fs.readFileSync(filePath, { encoding: "base64" });
+
+  const analyzeResp = await client.chat.completions.create({
+    model: "gpt-4o-mini",
+    messages: [
+      {
+        role: "system",
+        content: "You are an OCR assistant. Extract only the plain text (teacher pattern) from the image."
+      },
+      {
+        role: "user",
+        content: [
+          { type: "text", text: "Extract teacher pattern text from this image:" },
+          { type: "image_url", image_url: { url: `data:image/png;base64,${imageBase64}` } }
+        ]
       }
-    }
+    ],
+    temperature: 0,
+    max_tokens: 1200
+  });
+
+  const extracted = analyzeResp.choices?.[0]?.message?.content?.trim() || "";
+  if (extracted) {
+    teacherPattern = `${teacherPattern}\n${extracted}`.trim();
+  }
+}
+
 
     // If teacher mode is requested, teacherPattern must exist
-    if (mode === "teacher") {
+    if (modeNormalized === "teacher") {
       if (!teacherPattern || !teacherPattern.trim()) {
         return res.status(400).json({ error: "⚠️ Teacher pattern required for mode 'teacher'." });
       }
