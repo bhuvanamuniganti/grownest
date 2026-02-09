@@ -211,7 +211,12 @@ router.post("/score", async (req, res) => {
     const ref = String(req.body?.referenceText || "").trim();
     const spoken = String(req.body?.transcript || "").trim();
     const topic = String(req.body?.topic || "General");
-    const parentLang = String(req.body?.parentLang || "hi");
+    const parentLang = String(
+  req.body?.parentLang ||
+  req.body?.parentLangFromPractice ||
+  "hi"
+);
+
     const parentLanguageName = getParentLanguageName(parentLang);
 
     if (!spoken) return res.json({ error: "Transcript missing" });
@@ -327,7 +332,12 @@ router.post("/correct", async (req, res) => {
   try {
     const referenceText = String(req.body?.referenceText || "");
     const transcript = String(req.body?.transcript || "");
-    const parentLang = String(req.body?.parentLang || "hi");
+    const parentLang = String(
+  req.body?.parentLang ||
+  req.body?.parentLangFromPractice ||
+  "hi"
+);
+
     const parentLanguageName = getParentLanguageName(parentLang);
 
     function postProcessCorrected(text = "") {
