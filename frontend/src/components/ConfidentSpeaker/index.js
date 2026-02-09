@@ -1,6 +1,7 @@
 
 import React, { useEffect, useState, useRef } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+
 import { API_BASE } from "../../api";
 import "./index.css";
 
@@ -242,6 +243,7 @@ export default function ConfidentSpeakerSection() {
   const voicesRef = useRef([]);
   const [, setIsPlaying] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
 
 const parentLangFromPractice =
   location.state?.parentLangFromPractice ||
@@ -777,8 +779,19 @@ const parentLangFromPractice =
     );
   }
 
-  return (
+  return (  
+      
+  
     <div className="confident-root">
+      <button
+        className="back-btn"  style={{
+    marginBottom: "12px",
+    alignSelf: "flex-start"
+  }}
+        onClick={() => navigate("/practice", { state: location.state })}
+      >
+        ← Back
+      </button>
       {stage === "topic" && (
         <TopicView
           topic={topic}
@@ -793,6 +806,7 @@ const parentLangFromPractice =
       {stage === "guide" && <GuidanceView />}
       {stage === "record" && <RecordView />}
       {stage === "feedback" && <FeedbackView />}
-    </div>
-  );
+    </div>  );
+
+
 }
