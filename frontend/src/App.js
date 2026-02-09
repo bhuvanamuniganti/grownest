@@ -2,6 +2,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./Home";
 import Practice from "./Practice";
 import ConfidentSpeaker from "./components/ConfidentSpeaker";
+import TranslatorSection from "./components/TranslatorSection/index.js";
+
 import "./App.css";
 
 function App() {
@@ -14,6 +16,9 @@ function App() {
           path="/practice/confident-speaker"
           element={<ConfidentSpeaker />}
         />
+
+        <Route path="/practice/translator" element={<TranslatorSection />} />
+
       </Routes>
     </BrowserRouter>
   );

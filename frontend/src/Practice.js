@@ -37,9 +37,9 @@ function Practice() {
 
           <div
           className="practice-card"
-          onClick={() => openSection("audio-books")}
+          onClick={() => openSection("translator")}
         >
-          <h3>🎧 Audio Learning</h3>
+          <h3>🎧 Audio Books</h3>
           <p>
             Learn concepts by listening to clear audio explanations.
             Makes learning engaging and easy to follow.
@@ -57,16 +57,6 @@ function Practice() {
           </p>
         </div>
 
-        <div
-          className="practice-card"
-          onClick={() => openSection("audio-books")}
-        >
-          <h3>🎧 Audio Learning</h3>
-          <p>
-            Learn concepts by listening to clear audio explanations.
-            Makes learning engaging and easy to follow.
-          </p>
-        </div>
 
         <div
           className="practice-card"
