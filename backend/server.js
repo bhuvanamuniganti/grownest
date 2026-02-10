@@ -10,10 +10,16 @@ const practiceImageRoutes = require("./routes/practiceImage");
 const app = express();
 
 /* ---------- MIDDLEWARE ---------- */
-app.use(cors({
-  origin: "http://localhost:3000",
-  credentials: true
-}));
+app.use(
+  cors({
+    origin: [
+      "http://localhost:3000",
+      "https://grownest.netlify.app",
+    ],
+    credentials: true,
+  })
+);
+
 
 app.use(express.json());
 
