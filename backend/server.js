@@ -27,7 +27,7 @@ app.use(
 /* ---------- ROUTES (ISOLATED) ---------- */
 app.use("/api/speaking", speakingRoutes);
 app.use("/api/learning", learningRoutes);
-app.use("/api/practice-image", practiceImageRoutes);
+//app.use("/api/practice-image", practiceImageRoutes);
 
 /* ---------- START SERVER ---------- */
 const PORT = process.env.PORT || 5000;
