@@ -5,7 +5,7 @@ require("dotenv").config();
 
 const speakingRoutes = require("./routes/speakingRoutes");
 const learningRoutes = require("./routes/learningRoutes");
-const practiceImageRoutes = require("./routes/practiceImage");
+// const practiceImageRoutes = require("./routes/practiceImage");
 
 const app = express();
 
@@ -20,7 +20,6 @@ app.use(
   })
 );
 
-
 app.use(express.json());
 
 app.use(
@@ -30,10 +29,15 @@ app.use(
   })
 );
 
-/* ---------- ROUTES (ISOLATED) ---------- */
+/* ---------- HEALTH CHECK ---------- */
+app.get("/health", (req, res) => {
+  res.json({ status: "ok", service: "grownest-backend" });
+});
+
+/* ---------- ROUTES ---------- */
 app.use("/api/speaking", speakingRoutes);
 app.use("/api/learning", learningRoutes);
-//app.use("/api/practice-image", practiceImageRoutes);
+// app.use("/api/practice-image", practiceImageRoutes);
 
 /* ---------- START SERVER ---------- */
 const PORT = process.env.PORT || 5000;
